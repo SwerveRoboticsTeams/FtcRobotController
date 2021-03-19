@@ -6,21 +6,30 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public abstract class MasterOpMode extends LinearOpMode
 {
-    //Motors
+    //Drive motors
     DcMotor motorFrontLeft;
     DcMotor motorFrontRight;
     DcMotor motorBackLeft;
     DcMotor motorBackRight;
 
+    //Misc. Motors
+    DcMotor motorZiptie;
+
     //Other Devices
 
     public void Initialize(){
         //Initialize
+
+            //Drive motors
         motorFrontLeft = hardwareMap.dcMotor.get("motorFL");
         motorFrontRight = hardwareMap.dcMotor.get("motorFR");
         motorBackLeft = hardwareMap.dcMotor.get("motorBL");
         motorBackRight = hardwareMap.dcMotor.get("motorBR");
 
+            //Misc. motors
+        motorZiptie = hardwareMap.dcMotor.get("motorZiptie");
+
+        //Resets drive motors' encoders
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -29,6 +38,9 @@ public abstract class MasterOpMode extends LinearOpMode
         motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //Starts misc. motors' - No encoder
+        motorZiptie.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void driveMecanum(double driveAngle, double drivePower, double w)
@@ -54,5 +66,10 @@ public abstract class MasterOpMode extends LinearOpMode
             motorBackLeft.setPower(motorBLPower);
             motorBackRight.setPower(motorBRPower);
         }
+    }
+
+    public void driveZiptie(double power)
+    {
+        motorZiptie.setPower(power);
     }
 }
